@@ -652,7 +652,7 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             key="d1_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Pattern Recognition', 'workout1.d1_completed_at')}
+            onLoad={() => logRep('Story Separation', 'workout1.d1_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -663,7 +663,7 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
               )}
               <p className="text-xl opacity-60">Detection is separation.</p>
               <div className="pt-12">
-                <p className="text-[10px] uppercase tracking-[0.3em] opacity-40">Rep Logged: Pattern Recognition +1</p>
+                <p className="text-[10px] uppercase tracking-[0.3em] opacity-40">Rep Logged: Story Separation +1</p>
               </div>
               {renderCTA('Continue', 'd2_intro')}
             </div>
@@ -738,14 +738,14 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             key="d2_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Story Separation', 'workout1.d2_completed_at')}
+            onLoad={() => logRep('Pattern Recognition', 'workout1.d2_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
               <h2 className="font-serif italic text-3xl">Intensity rises when interpretation compounds.</h2>
               <p className="text-xl opacity-60">You practiced interruption under pressure.</p>
               <div className="pt-12">
-                <p className="text-[10px] uppercase tracking-[0.3em] opacity-40">Rep Logged: Story Separation +1</p>
+                <p className="text-[10px] uppercase tracking-[0.3em] opacity-40">Rep Logged: Pattern Recognition +1</p>
               </div>
               {renderCTA('Continue', 'd3_play1')}
             </div>
@@ -978,10 +978,10 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
                 <button
                   onClick={() => setCurrentScreen('journal_confirm')}
-                  className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 transition-all"
+                  className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
                 >
                   Save Training Log
                 </button>
@@ -1006,10 +1006,10 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">Training log updated.</h2>
                 <p className="opacity-60">Repetition builds separation.</p>
               </div>
-              <div className="flex flex-col gap-4">
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
                 <button
                   onClick={onComplete}
-                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
+                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
                 >
                   Return Home
                 </button>

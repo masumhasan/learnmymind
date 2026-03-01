@@ -557,7 +557,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd2_penny' && (
-          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Identity Stability', 'workout3.d2_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Sensation Separation', 'workout3.d2_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Activation is not regression.</h2>
               <p className="opacity-60">You separated sensation from meaning. That separation is control.</p>
@@ -761,8 +761,10 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
                   ))}
                 </div>
               </div>
-              <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium">Save Reflection</button>
-              <button onClick={() => setCurrentScreen('skill_reps_entry')} className="text-xs opacity-40 uppercase tracking-widest text-center">Skip for Now</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Save Reflection</button>
+                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="text-xs opacity-40 uppercase tracking-widest text-center">Skip for Now</button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -775,8 +777,8 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">This moment is saved.</h2>
                 <p className="opacity-60">Entry stored.</p>
               </div>
-              <div className="flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium">Continue to Skill Reps</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Continue to Skill Reps</button>
                 <button onClick={onComplete} className="text-xs uppercase tracking-widest opacity-40">Return Home</button>
               </div>
             </div>
@@ -811,7 +813,9 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
               </div>
               <p className="text-2xl font-serif italic">“This is how fear weakens.”</p>
               <p className="text-[10px] uppercase tracking-widest opacity-40">Workout completion logs on button tap.</p>
-              <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 transition-all">Finish Training</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Finish Training</button>
+              </div>
             </div>
           </motion.div>
         )}

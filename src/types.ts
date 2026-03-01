@@ -28,9 +28,17 @@ export interface ReturnToNowScreen {
   instruction: string;
 }
 
+export interface MuscleProgress {
+  muscle_id: string;
+  muscle_name: string;
+  sessions_trained: number[];
+  rep_count: number;
+}
+
 export interface UserState {
   progress: any[];
   stats: Record<string, number>;
   tracking: Record<string, string>;
   completedWorkouts: number[];
+  muscleProgress: MuscleProgress[];
 }

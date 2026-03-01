@@ -509,7 +509,9 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
                   <span>10s</span>
                 </div>
               </div>
-              {d2Delay === 10 && renderCTA('Wait', 'd2_wait')}
+              <div className="absolute bottom-12 left-6 right-6 flex justify-center">
+                {d2Delay === 10 && renderCTA('Wait', 'd2_wait')}
+              </div>
             </div>
           </motion.div>
         )}
@@ -588,9 +590,9 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
               <div className="p-8 bg-accent/5 rounded-3xl border border-accent/10 min-h-[120px] flex items-center justify-center">
                 <p className="text-xl font-serif italic">{d3Text}<motion.span animate={{ opacity: [0, 1, 0] }} transition={{ duration: 0.8, repeat: Infinity }} className="inline-block w-0.5 h-6 bg-accent ml-1 align-middle" /></p>
               </div>
-              <div className="space-y-4">
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
                 <p className="text-xs opacity-40">Tap CUT before the thought completes.</p>
-                <button onClick={() => setCurrentScreen('d3_open_hold')} className="bg-ink text-bg px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest">Cut Here</button>
+                <button onClick={() => setCurrentScreen('d3_open_hold')} className="bg-ink text-bg px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all">Cut Here</button>
               </div>
             </div>
           </motion.div>
@@ -786,8 +788,8 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
                 </div>
               </div>
               
-              <div className="flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium">Save Reflection</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Save Reflection</button>
                 <button onClick={() => setCurrentScreen('skill_reps_entry')} className="text-xs opacity-40 uppercase tracking-widest text-center">Skip for Now</button>
               </div>
             </div>
@@ -802,8 +804,8 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">This interruption is recorded.</h2>
                 <p className="opacity-60">Repetition makes it automatic.</p>
               </div>
-              <div className="flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium">Continue to Skill Reps</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Continue to Skill Reps</button>
                 <button onClick={onComplete} className="text-xs uppercase tracking-widest opacity-40">Return Home</button>
               </div>
             </div>
@@ -828,9 +830,9 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
                 <p className="opacity-60">It stopped because you stopped obeying it. This is a learning skill — not a fix.</p>
               </div>
               <p className="text-[10px] uppercase tracking-widest opacity-40">Workout completion logs on button tap.</p>
-              <div className="flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('entry')} className="bg-accent/5 text-accent px-12 py-4 rounded-full font-medium border border-accent/10">Replay Training</button>
-                <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 transition-all">Finish Training</button>
+              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('entry')} className="bg-accent/5 text-accent px-12 py-4 rounded-full font-medium border border-accent/10 hover:bg-accent/10 transition-all">Replay Training</button>
+                <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Finish Training</button>
               </div>
             </div>
           </motion.div>

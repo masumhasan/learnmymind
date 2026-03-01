@@ -11,6 +11,7 @@ import ReturnToNow from './components/ReturnToNow';
 import MuscleSummary from './components/MuscleSummary';
 import AICoach from './components/AICoach';
 import Onboarding from './components/Onboarding';
+import MuscleDashboard from './components/MuscleDashboard';
 import { User, Workout, UserState } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 import { Brain, ArrowRight } from 'lucide-react';
@@ -20,10 +21,11 @@ export default function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [isNewUser, setIsNewUser] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
-  const [userState, setUserState] = useState<UserState>({ progress: [], stats: {}, tracking: {} });
+  const [userState, setUserState] = useState<UserState>({ progress: [], stats: {}, tracking: {}, completedWorkouts: [], muscleProgress: [] });
   const [selectedWorkout, setSelectedWorkout] = useState<Workout | null>(null);
   const [isTraining, setIsTraining] = useState(false);
   const [repsDone, setRepsDone] = useState(0);
+  const [showMuscleDashboard, setShowMuscleDashboard] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -34,7 +36,13 @@ export default function App() {
           data.stats.forEach((s: any) => {
             statsMap[s.muscle_name] = s.value;
           });
-          setUserState({ progress: data.progress, stats: statsMap, tracking: data.tracking });
+          setUserState({ 
+            progress: data.progress, 
+            stats: statsMap, 
+            tracking: data.tracking,
+            completedWorkouts: data.completedWorkouts || [],
+            muscleProgress: data.muscleProgress || []
+          });
         });
     }
   }, [user]);
@@ -92,7 +100,13 @@ export default function App() {
         data.stats.forEach((s: any) => {
           statsMap[s.muscle_name] = s.value;
         });
-        setUserState({ progress: data.progress, stats: statsMap, tracking: data.tracking });
+        setUserState({ 
+          progress: data.progress, 
+          stats: statsMap, 
+          tracking: data.tracking,
+          completedWorkouts: data.completedWorkouts || [],
+          muscleProgress: data.muscleProgress || []
+        });
         setIsTraining(false);
         setSelectedWorkout(null);
         setRepsDone(0);
@@ -259,25 +273,30 @@ export default function App() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => {
-                    if (repsDone < selectedWorkout.reps) {
-                      setRepsDone(prev => prev + 1);
-                    } else {
-                      completeWorkout();
-                    }
-                  }}
-                  className="w-full bg-accent text-bg py-6 rounded-3xl font-serif italic text-xl shadow-xl active:scale-95 transition-transform"
-                >
-                  {repsDone < selectedWorkout.reps ? 'Tap to Rep' : 'Finish Workout'}
-                </button>
+                <div className="absolute bottom-12 left-6 right-6 flex justify-center">
+                  <button
+                    onClick={() => {
+                      if (repsDone < selectedWorkout.reps) {
+                        setRepsDone(prev => prev + 1);
+                      } else {
+                        completeWorkout();
+                      }
+                    }}
+                    className="w-full bg-accent text-bg py-6 rounded-3xl font-serif italic text-xl shadow-xl active:scale-95 transition-transform"
+                  >
+                    {repsDone < selectedWorkout.reps ? 'Tap to Rep' : 'Finish Workout'}
+                  </button>
+                </div>
               </div>
             )
           ) : (
-            <WorkoutList onSelect={(w) => {
+            <WorkoutList 
+              onSelect={(w) => {
                 setSelectedWorkout(w);
                 setIsTraining(true);
-              }} />
+              }} 
+              completedWorkouts={userState.completedWorkouts}
+            />
             )}
           </motion.div>
         )}
@@ -306,8 +325,25 @@ export default function App() {
 
         {activeTab === 'profile' && (
           <motion.div key="profile" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <div className="flex justify-end mb-4">
+              <button 
+                onClick={() => setShowMuscleDashboard(true)}
+                className="text-[10px] uppercase tracking-widest bg-accent/5 px-4 py-2 rounded-full hover:bg-accent/10 transition-colors"
+              >
+                View Cognitive Muscles
+              </button>
+            </div>
             <MuscleSummary state={userState} />
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showMuscleDashboard && (
+          <MuscleDashboard 
+            userState={userState} 
+            onBack={() => setShowMuscleDashboard(false)} 
+          />
         )}
       </AnimatePresence>
 

@@ -23,7 +23,7 @@ export const WORKOUTS: Workout[] = [
     description: "Spot the second alarm (the echo) in real time.",
     difficulty: 3,
     reps: 1,
-    muscles: { "Alarm Loop Recognition": 1, "Escalation Awareness": 1 }
+    muscles: { "Loop Disruption": 1, "Escalation Awareness": 1 }
   },
   {
     id: 3,
@@ -41,6 +41,19 @@ export const WORKOUTS: Workout[] = [
     reps: 1,
     muscles: { "Cognitive Distance": 1, "Attention Control": 1, "Urgency Resistance": 1, "Completion Tolerance": 1 }
   }
+];
+
+export const MUSCLES = [
+  { id: "attention_control", name: "Attention Control" },
+  { id: "urgency_resistance", name: "Urgency Resistance" },
+  { id: "completion_tolerance", name: "Completion Tolerance" },
+  { id: "pattern_recognition", name: "Pattern Recognition" },
+  { id: "story_separation", name: "Story Separation" },
+  { id: "loop_disruption", name: "Loop Disruption" },
+  { id: "escalation_awareness", name: "Escalation Awareness" },
+  { id: "sensation_separation", name: "Sensation Separation" },
+  { id: "non_reactivity", name: "Non-Reactivity" },
+  { id: "cognitive_distance", name: "Cognitive Distance" }
 ];
 
 export const DRIFT_TILES: DriftTile[] = [

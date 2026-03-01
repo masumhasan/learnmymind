@@ -23,7 +23,7 @@ export default function Layout({ children, activeTab, setActiveTab }: LayoutProp
       {/* Header */}
       <header className="p-6 border-b border-line flex justify-between items-center">
         <h1 className="font-serif italic text-2xl tracking-tight text-ink">LearnMyMind</h1>
-        <div className="text-[10px] font-mono uppercase tracking-widest opacity-50 text-ink">MVP v1.0</div>
+        <div className="text-[10px] font-mono uppercase tracking-widest opacity-50 text-ink">BETA v1.3</div>
       </header>
 
       {/* Main Content */}

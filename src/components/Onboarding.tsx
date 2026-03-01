@@ -46,19 +46,21 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p>Not motivation.</p>
               <p>Training.</p>
             </div>
-            <button
-              onClick={() => next('what_is')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 group"
-            >
-              ▶ Begin
-            </button>
+            <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+              <button
+                onClick={() => next('what_is')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 group hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Begin
+              </button>
 
-            <button
-              onClick={onLoginClick}
-              className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity pt-4"
-            >
-              Already have an account? Login
-            </button>
+              <button
+                onClick={onLoginClick}
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
+              >
+                Already have an account? Login
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -77,12 +79,14 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p>Built around cognitive workouts.</p>
               <p>Designed to strengthen attention and separation.</p>
             </div>
-            <button
-              onClick={() => next('what_is_not')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2"
-            >
-              ▶ Continue
-            </button>
+            <div className="absolute bottom-12 left-6 right-6">
+              <button
+                onClick={() => next('what_is_not')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Continue
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -110,12 +114,14 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                 It trains where attention goes.
               </p>
             </div>
-            <button
-              onClick={() => next('how_it_works')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2"
-            >
-              ▶ Continue
-            </button>
+            <div className="absolute bottom-12 left-6 right-6">
+              <button
+                onClick={() => next('how_it_works')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Continue
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -144,12 +150,14 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               </div>
             </div>
             <p className="text-xs opacity-40 uppercase tracking-widest">Repetition builds automatic strength.</p>
-            <button
-              onClick={() => next('layers')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2"
-            >
-              ▶ Continue
-            </button>
+            <div className="absolute bottom-12 left-6 right-6">
+              <button
+                onClick={() => next('layers')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Continue
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -177,12 +185,14 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                 <p className="text-sm opacity-60">Pattern exposure through media.</p>
               </div>
             </div>
-            <button
-              onClick={() => next('expectation')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2"
-            >
-              ▶ Continue
-            </button>
+            <div className="absolute bottom-12 left-6 right-6">
+              <button
+                onClick={() => next('expectation')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Continue
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -204,12 +214,14 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p>You will notice them sooner.</p>
               <p>And respond differently.</p>
             </div>
-            <button
-              onClick={() => next('account')}
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2"
-            >
-              ▶ Create Account
-            </button>
+            <div className="absolute bottom-12 left-6 right-6">
+              <button
+                onClick={() => next('account')}
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
+              >
+                ▶ Create Account
+              </button>
+            </div>
           </motion.div>
         );
 
@@ -268,13 +280,15 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                 </span>
               </label>
 
+            <div className="absolute bottom-12 left-6 right-6">
               <button
                 disabled={!username || !agreed}
                 onClick={() => onComplete(username)}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 disabled:opacity-20 transition-opacity"
+                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 disabled:opacity-20 transition-all hover:scale-105 active:scale-95"
               >
                 ▶ Enter Training Floor
               </button>
+            </div>
             </div>
           </motion.div>
         );
@@ -282,7 +296,7 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
   };
 
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center p-6 overflow-hidden">
+    <div className="fixed inset-0 bg-bg z-50 flex items-center justify-center p-6 overflow-hidden">
       <AnimatePresence mode="wait">
         {renderScreen()}
       </AnimatePresence>

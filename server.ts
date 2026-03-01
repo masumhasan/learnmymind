@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import Database from "better-sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
+import { WORKOUTS, MUSCLES } from "./src/constants.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,16 +63,39 @@ async function startServer() {
   });
 
   app.get("/api/progress/:userId", (req, res) => {
-    const progress = db.prepare("SELECT * FROM progress WHERE user_id = ?").all(req.params.userId);
-    const stats = db.prepare("SELECT * FROM muscle_stats WHERE user_id = ?").all(req.params.userId);
-    const tracking = db.prepare("SELECT * FROM workout_tracking WHERE user_id = ?").all(req.params.userId);
+    const userId = req.params.userId;
+    const progress = db.prepare("SELECT * FROM progress WHERE user_id = ?").all(userId) as any[];
+    const stats = db.prepare("SELECT * FROM muscle_stats WHERE user_id = ?").all(userId) as any[];
+    const tracking = db.prepare("SELECT * FROM workout_tracking WHERE user_id = ?").all(userId) as any[];
     
     const trackingMap: Record<string, string> = {};
     tracking.forEach((t: any) => {
       trackingMap[t.key] = t.value;
     });
 
-    res.json({ progress, stats, tracking: trackingMap });
+    const completedWorkouts = [...new Set(progress.map(p => p.workout_id))];
+
+    // Calculate muscle progress
+    const muscleProgress = MUSCLES.map(m => {
+      const sessions_trained = [...new Set(
+        WORKOUTS
+          .filter(w => w.muscles[m.name])
+          .filter(w => completedWorkouts.includes(w.id))
+          .map(w => w.id)
+      )];
+      
+      const stat = stats.find(s => s.muscle_name === m.name);
+      const rep_count = stat ? stat.value : 0;
+
+      return {
+        muscle_id: m.id,
+        muscle_name: m.name,
+        sessions_trained,
+        rep_count
+      };
+    });
+
+    res.json({ progress, stats, tracking: trackingMap, completedWorkouts, muscleProgress });
   });
 
   app.post("/api/log-rep", (req, res) => {
@@ -115,6 +139,9 @@ async function startServer() {
       return res.json({ success: false, reason: "10-minute rule" });
     }
 
+    const workout = WORKOUTS.find(w => w.id === workoutId);
+    if (!workout) return res.status(404).json({ success: false, reason: "Workout not found" });
+
     db.transaction(() => {
       // Log progress
       db.prepare("INSERT INTO progress (user_id, workout_id, reps) VALUES (?, ?, 1)").run(userId, workoutId);
@@ -132,6 +159,15 @@ async function startServer() {
         VALUES (?, ?, '1')
         ON CONFLICT(user_id, key) DO UPDATE SET value = CAST(CAST(value AS INTEGER) + 1 AS TEXT)
       `).run(userId, countKey);
+
+      // Rule 1: Increment reps for each muscle trained in this session
+      for (const [muscleName, value] of Object.entries(workout.muscles)) {
+        db.prepare(`
+          INSERT INTO muscle_stats (user_id, muscle_name, value) 
+          VALUES (?, ?, ?)
+          ON CONFLICT(user_id, muscle_name) DO UPDATE SET value = value + ?
+        `).run(userId, muscleName, value, value);
+      }
     })();
 
     res.json({ success: true });

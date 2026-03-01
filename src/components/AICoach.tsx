@@ -40,7 +40,7 @@ export default function AICoach() {
       <div className="p-6 bg-accent text-bg rounded-2xl space-y-4">
         <div className="flex items-center gap-3">
           <Lock size={18} className="opacity-50" />
-          <h4 className="font-medium tracking-tight">Layer B Feature</h4>
+          <h4 className="font-medium tracking-tight">AI Coach coming soon</h4>
         </div>
         <p className="text-xs opacity-70 leading-relaxed">
           Full AI integration, including live response to stress and fear, will be available in the next expansion.
