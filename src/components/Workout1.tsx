@@ -37,6 +37,48 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
   const [d2Lines, setD2Lines] = useState<number>(0);
   const [isHolding, setIsHolding] = useState(false);
   const [d3Detected, setD3Detected] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
+  const startListening = (next?: Screen) => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported in this browser.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const speechToText = event.results[0][0].transcript;
+      console.log("Speech detected:", speechToText);
+      setD3Detected(true);
+      setIsListening(false);
+      setTimeout(() => setCurrentScreen(next || 'd3_play2'), 2000);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Recognition start error:", err);
+      setIsListening(false);
+    }
+  };
   const [journalText, setJournalText] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -111,17 +153,37 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
 
   // Drill 2: Distortion Logic
   useEffect(() => {
-    if (currentScreen === 'd2_play' && !isHolding && d2Lines < 4) {
-      const timer = setInterval(() => {
-        setD2Lines(prev => prev + 1);
-        setD2Intensity(prev => prev + 25);
-      }, 1500);
-      return () => clearInterval(timer);
-    }
-    if (d2Lines === 4) {
-      setTimeout(() => setCurrentScreen('d2_penny'), 3000);
+    if (currentScreen === 'd2_play') {
+      if (!isHolding && d2Lines < 4) {
+        const timer = setInterval(() => {
+          setD2Lines(prev => prev + 1);
+          setD2Intensity(prev => prev + 25);
+        }, 1500);
+        return () => clearInterval(timer);
+      }
+      if (d2Lines === 4) {
+        const timer = setTimeout(() => setCurrentScreen('d2_penny'), 3000);
+        return () => clearTimeout(timer);
+      }
     }
   }, [currentScreen, isHolding, d2Lines]);
+
+  useEffect(() => {
+    if (currentScreen === 'd1_penny') {
+      logRep('Story Separation', 'workout1.d1_completed_at');
+    } else if (currentScreen === 'd2_penny') {
+      logRep('Pattern Recognition', 'workout1.d2_completed_at');
+    } else if (currentScreen === 'd3_penny') {
+      logRep('Story Separation', 'workout1.d3_completed_at');
+    }
+  }, [currentScreen]);
+
+  useEffect(() => {
+    if (currentScreen === 'd2_intro') {
+      setD2Lines(0);
+      setD2Intensity(0);
+    }
+  }, [currentScreen]);
 
   const renderNav = (showHome = false) => (
     <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50">
@@ -652,7 +714,6 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             key="d1_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Story Separation', 'workout1.d1_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -738,7 +799,6 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             key="d2_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Pattern Recognition', 'workout1.d2_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -770,11 +830,8 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
               <div className="relative">
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => {
-                    setD3Detected(true);
-                    setTimeout(() => setCurrentScreen('d3_play2'), 2000);
-                  }}
-                  className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all ${d3Detected ? 'bg-accent border-accent text-bg' : 'border-line/20'}`}
+                  onClick={startListening}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all ${isListening ? 'bg-red-500 border-red-500 text-white animate-pulse' : (d3Detected ? 'bg-accent border-accent text-bg' : 'border-line/20')}`}
                 >
                   <Mic size={32} />
                 </motion.button>
@@ -809,10 +866,8 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
               </div>
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  setTimeout(() => setCurrentScreen('d3_penny'), 2000);
-                }}
-                className="w-20 h-20 rounded-full flex items-center justify-center border-2 border-accent text-accent"
+                onClick={() => startListening('d3_penny')}
+                className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all ${isListening ? 'bg-red-500 border-red-500 text-white animate-pulse' : 'border-accent text-accent hover:bg-accent/5'}`}
               >
                 <Mic size={32} />
               </motion.button>
@@ -825,7 +880,6 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             key="d3_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Story Separation', 'workout1.d3_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">

@@ -35,6 +35,46 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
   const [d3Status, setD3Status] = useState<string | null>(null);
   const [journalText, setJournalText] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [isListening, setIsListening] = useState(false);
+
+  const startListening = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported in this browser.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const speechToText = event.results[0][0].transcript;
+      setJournalText(prev => prev + (prev ? " " : "") + speechToText);
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Recognition start error:", err);
+      setIsListening(false);
+    }
+  };
 
   const SECTIONS: { id: Screen; label: string; group: string }[] = [
     { id: 'entry', label: 'Orientation', group: 'Intro' },
@@ -46,6 +86,15 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
     { id: 'muscle_summary', label: 'Summary', group: 'Review' },
   ];
 
+  useEffect(() => {
+    if (currentScreen === 'd1_penny') {
+      logRep('Sensation Separation', 'workout3.d1_completed_at');
+    } else if (currentScreen === 'd2_penny') {
+      logRep('Sensation Separation', 'workout3.d2_completed_at');
+    } else if (currentScreen === 'd3_penny') {
+      logRep('Non-Reactivity', 'workout3.d3_completed_at');
+    }
+  }, [currentScreen]);
   const DRILL_SCREENS = ['d1_r1_l2', 'd1_r1_l3', 'd1_speed1', 'd1_speed2', 'd1_speed3', 'd2_exposure', 'd2_rapid1', 'd2_rapid2', 'd2_rapid3', 'd2_rapid4', 'd3_hold1', 'd3_hold2'];
   const isDrill = DRILL_SCREENS.includes(currentScreen);
 
@@ -482,7 +531,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
         ))}
 
         {currentScreen === 'd1_penny' && (
-          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Sensation Separation', 'workout3.d1_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Activation is not regression.</h2>
               <p className="opacity-60">You separated sensation from meaning. That separation is control.</p>
@@ -557,7 +606,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd2_penny' && (
-          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Sensation Separation', 'workout3.d2_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Activation is not regression.</h2>
               <p className="opacity-60">You separated sensation from meaning. That separation is control.</p>
@@ -634,7 +683,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd3_penny' && (
-          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Non-Reactivity', 'workout3.d3_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Activation is not regression.</h2>
               <p className="opacity-60">You separated sensation from meaning. That separation is control.</p>
@@ -750,7 +799,13 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
               </div>
               <div className="flex gap-4">
                 <button className="flex-1 p-4 bg-line/20 rounded-2xl flex flex-col items-center gap-2 opacity-50"><MessageSquare size={20} /><span className="text-xs">Type</span></button>
-                <button className="flex-1 p-4 bg-line/20 rounded-2xl flex flex-col items-center gap-2 opacity-50"><Mic size={20} /><span className="text-xs">Voice</span></button>
+                <button 
+                  onClick={startListening}
+                  className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 transition-all ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-line/20 hover:bg-line/30'}`}
+                >
+                  <Mic size={20} />
+                  <span className="text-xs">{isListening ? 'Listening...' : 'Voice'}</span>
+                </button>
               </div>
               <textarea value={journalText} onChange={(e) => setJournalText(e.target.value)} className="w-full h-32 bg-line/10 rounded-2xl p-4 outline-none focus:ring-1 ring-accent/20 transition-all resize-none" placeholder="Your reflection..." />
               <div className="space-y-2">

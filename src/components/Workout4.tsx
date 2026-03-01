@@ -48,6 +48,51 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
     instead: ""
   });
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [isListening, setIsListening] = useState(false);
+
+  const startListening = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported in this browser.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const speechToText = event.results[0][0].transcript;
+      // For Workout4, we have multiple fields. We'll append to the "thought" field by default or whichever is focused.
+      // For simplicity, let's append to the first empty field or the "thought" field.
+      setJournalData(prev => ({
+        ...prev,
+        thought: prev.thought + (prev.thought ? " " : "") + speechToText
+      }));
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Recognition start error:", err);
+      setIsListening(false);
+    }
+  };
 
   const SECTIONS: { id: Screen; label: string; group: string }[] = [
     { id: 'entry', label: 'Orientation', group: 'Intro' },
@@ -59,6 +104,15 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
     { id: 'muscle_summary', label: 'Summary', group: 'Review' },
   ];
 
+  useEffect(() => {
+    if (currentScreen === 'd1_penny') {
+      logRep('Attention Control', 'workout4.d1_completed_at');
+    } else if (currentScreen === 'd2_penny') {
+      logRep('Urgency Resistance', 'workout4.d2_completed_at');
+    } else if (currentScreen === 'd3_penny') {
+      logRep('Completion Tolerance', 'workout4.d3_completed_at');
+    }
+  }, [currentScreen]);
   const DRILL_SCREENS = ['d1_split', 'd2_prompt', 'd2_wait', 'd3_generator', 'd3_cut', 'd3_open_hold'];
   const isDrill = DRILL_SCREENS.includes(currentScreen);
 
@@ -467,7 +521,7 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd1_penny' && (
-          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Attention Control', 'workout4.d1_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Noise runs on attention.</h2>
               <p className="opacity-60">You didn’t stop thoughts. You removed fuel.</p>
@@ -547,7 +601,7 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd2_penny' && (
-          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Urgency Resistance', 'workout4.d2_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Delay breaks authority.</h2>
               <p className="opacity-60">Urgency promised consequences. Nothing arrived.</p>
@@ -631,7 +685,7 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd3_penny' && (
-          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Completion Tolerance', 'workout4.d3_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">Nothing required an ending.</h2>
               <p className="opacity-60">The thought stayed unfinished. You didn’t complete it.</p>
@@ -774,7 +828,13 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
 
               <div className="flex gap-4">
                 <button className="flex-1 p-4 bg-line/20 rounded-2xl flex flex-col items-center gap-2 opacity-50"><MessageSquare size={20} /><span className="text-xs">Type</span></button>
-                <button className="flex-1 p-4 bg-line/20 rounded-2xl flex flex-col items-center gap-2 opacity-50"><Mic size={20} /><span className="text-xs">Voice</span></button>
+                <button 
+                  onClick={startListening}
+                  className={`flex-1 p-4 rounded-2xl flex flex-col items-center gap-2 transition-all ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-line/20 hover:bg-line/30'}`}
+                >
+                  <Mic size={20} />
+                  <span className="text-xs">{isListening ? 'Listening...' : 'Voice'}</span>
+                </button>
               </div>
 
               <div className="space-y-2">

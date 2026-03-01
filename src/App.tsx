@@ -273,18 +273,20 @@ export default function App() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => {
-                    if (repsDone < selectedWorkout.reps) {
-                      setRepsDone(prev => prev + 1);
-                    } else {
-                      completeWorkout();
-                    }
-                  }}
-                  className="w-full bg-accent text-bg py-6 rounded-3xl font-serif italic text-xl shadow-xl active:scale-95 transition-transform"
-                >
-                  {repsDone < selectedWorkout.reps ? 'Tap to Rep' : 'Finish Workout'}
-                </button>
+                <div className="absolute bottom-12 left-6 right-6 flex justify-center">
+                  <button
+                    onClick={() => {
+                      if (repsDone < selectedWorkout.reps) {
+                        setRepsDone(prev => prev + 1);
+                      } else {
+                        completeWorkout();
+                      }
+                    }}
+                    className="w-full bg-accent text-bg py-6 rounded-3xl font-serif italic text-xl shadow-xl active:scale-95 transition-transform"
+                  >
+                    {repsDone < selectedWorkout.reps ? 'Tap to Rep' : 'Finish Workout'}
+                  </button>
+                </div>
               </div>
             )
           ) : (

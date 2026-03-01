@@ -93,6 +93,17 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
     }
   }, [currentScreen, countdown]);
 
+  useEffect(() => {
+    if (currentScreen === 'drill1_penny') {
+      logRep('Attention Control', 'workout0.d1_completed_at');
+    } else if (currentScreen === 'drill2_penny') {
+      logRep('Urgency Resistance', 'workout0.d2_completed_at');
+    } else if (currentScreen === 'drill3_penny') {
+      logRep('Completion Tolerance', 'workout0.d3_completed_at');
+    } else if (currentScreen === 'sr1_penny') {
+      logRep('Pattern Recognition', 'workout0.sr1_completed_at');
+    }
+  }, [currentScreen]);
   // Drill 1 Notifications
   useEffect(() => {
     if (currentScreen === 'drill1_test') {
@@ -538,8 +549,8 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
                 <p className="font-serif italic text-xl">Imagine your mind as an iceberg.</p>
                 <p className="text-xs opacity-50">The tiny part at the top — thoughts — is what you’re aware of.</p>
               </div>
-              {renderCTA('Continue', 'training_contents')}
             </div>
+            {renderCTA('Continue', 'training_contents')}
           </motion.div>
         )}
 
@@ -915,7 +926,6 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
             key="drill1_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Attention Control', 'workout0.d1_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -1019,7 +1029,6 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
             key="drill2_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Urgency Resistance', 'workout0.d2_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -1126,7 +1135,6 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
             key="drill3_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Completion Tolerance', 'workout0.d3_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">
@@ -1470,7 +1478,6 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
             key="sr1_penny"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onLoad={() => logRep('Pattern Recognition', 'workout0.sr1_completed_at')}
             className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg"
           >
             <div className="space-y-8 text-center">

@@ -10,8 +10,7 @@ interface WorkoutListProps {
 
 export default function WorkoutList({ onSelect, completedWorkouts }: WorkoutListProps) {
   const isUnlocked = (workoutId: number) => {
-    if (workoutId === 0) return true;
-    return completedWorkouts.includes(workoutId - 1);
+    return true; // Unlock all for development phase
   };
 
   return (

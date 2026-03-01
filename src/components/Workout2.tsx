@@ -124,6 +124,15 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
     }
   }, [currentScreen, sr1Tapped]);
 
+  useEffect(() => {
+    if (currentScreen === 'd1_penny') {
+      logRep('Escalation Awareness', 'workout2.d1_completed_at');
+    } else if (currentScreen === 'd2_penny') {
+      logRep('Loop Disruption', 'workout2.d2_completed_at');
+    } else if (currentScreen === 'd3_penny') {
+      logRep('Loop Disruption', 'workout2.d3_completed_at');
+    }
+  }, [currentScreen]);
   // Skill Rep 3: Escape Reflex
   useEffect(() => {
     if (currentScreen === 'sr3_play') {
@@ -564,7 +573,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd1_penny' && (
-          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Escalation Awareness', 'workout2.d1_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d1_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">The sensation did not multiply. The meaning multiplied.</h2>
               <p className="opacity-60">Repetition is added fuel. The loop grows from reaction to reaction.</p>
@@ -666,7 +675,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd2_penny' && (
-          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Loop Disruption', 'workout2.d2_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d2_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">The second alarm only survives when it’s answered.</h2>
               <p className="opacity-60">You didn’t answer. That’s restraint.</p>
@@ -731,7 +740,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
         )}
 
         {currentScreen === 'd3_penny' && (
-          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onLoad={() => logRep('Loop Disruption', 'workout2.d3_completed_at')} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
+          <motion.div key="d3_penny" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 bg-accent text-bg">
             <div className="text-center space-y-8 max-w-xs">
               <h2 className="font-serif italic text-3xl">You found the growth point.</h2>
               <p className="opacity-60">The loop expands when fear is added to sensation. Interrupt here — and escalation cannot multiply.</p>
