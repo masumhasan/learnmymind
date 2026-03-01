@@ -538,8 +538,8 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
                 <p className="font-serif italic text-xl">Imagine your mind as an iceberg.</p>
                 <p className="text-xs opacity-50">The tiny part at the top — thoughts — is what you’re aware of.</p>
               </div>
+              {renderCTA('Continue', 'training_contents')}
             </div>
-            {renderCTA('Continue', 'training_contents')}
           </motion.div>
         )}
 

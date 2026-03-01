@@ -761,10 +761,8 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
                   ))}
                 </div>
               </div>
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Save Reflection</button>
-                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="text-xs opacity-40 uppercase tracking-widest text-center">Skip for Now</button>
-              </div>
+              <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium">Save Reflection</button>
+              <button onClick={() => setCurrentScreen('skill_reps_entry')} className="text-xs opacity-40 uppercase tracking-widest text-center">Skip for Now</button>
             </div>
           </motion.div>
         )}
@@ -777,8 +775,8 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">This moment is saved.</h2>
                 <p className="opacity-60">Entry stored.</p>
               </div>
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Continue to Skill Reps</button>
+              <div className="flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium">Continue to Skill Reps</button>
                 <button onClick={onComplete} className="text-xs uppercase tracking-widest opacity-40">Return Home</button>
               </div>
             </div>
@@ -813,9 +811,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
               </div>
               <p className="text-2xl font-serif italic">“This is how fear weakens.”</p>
               <p className="text-[10px] uppercase tracking-widest opacity-40">Workout completion logs on button tap.</p>
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-                <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Finish Training</button>
-              </div>
+              <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 transition-all">Finish Training</button>
             </div>
           </motion.div>
         )}

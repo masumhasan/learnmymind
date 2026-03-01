@@ -467,9 +467,9 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
                 )}
               </div>
 
-              <div className="absolute bottom-12 left-6 right-6 flex justify-center">
+              <div className="flex justify-center">
                 {loopStep < 3 ? (
-                  <button onClick={() => setLoopStep(prev => prev + 1)} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">▶ Next Step</button>
+                  <button onClick={() => setLoopStep(prev => prev + 1)} className="bg-accent/10 text-accent px-8 py-3 rounded-full text-xs uppercase tracking-widest">Next Step</button>
                 ) : (
                   renderCTA('Continue', 'penny_drop')
                 )}
@@ -824,11 +824,9 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
                 className="w-full h-48 bg-line rounded-3xl p-6 outline-none focus:ring-2 ring-accent/5 transition-all resize-none"
                 placeholder="✍️ Type your reflection..."
               />
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">
-                  Save Training Log Entry
-                </button>
-              </div>
+              <button onClick={() => setCurrentScreen('journal_confirm')} className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 transition-all">
+                Save Training Log Entry
+              </button>
             </div>
           </motion.div>
         )}
@@ -843,8 +841,8 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">Entry stored.</h2>
                 <p className="opacity-60">Repetition builds recognition.</p>
               </div>
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Continue to Skill Reps</button>
+              <div className="flex flex-col gap-4">
+                <button onClick={() => setCurrentScreen('skill_reps_entry')} className="bg-accent text-bg px-12 py-4 rounded-full font-medium">Continue to Skill Reps</button>
                 <button onClick={onComplete} className="text-xs uppercase tracking-widest opacity-40">Return Home</button>
               </div>
             </div>
@@ -1062,9 +1060,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
                   ))}
                 </div>
               </div>
-            <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-              <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">Finish Training</button>
-            </div>
+              <button onClick={onComplete} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 transition-all">Finish Training</button>
             </div>
           </motion.div>
         )}

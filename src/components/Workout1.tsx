@@ -978,10 +978,10 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                 </div>
               </div>
 
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setCurrentScreen('journal_confirm')}
-                  className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
+                  className="bg-accent text-bg py-4 rounded-full font-medium hover:scale-105 transition-all"
                 >
                   Save Training Log
                 </button>
@@ -1006,10 +1006,10 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                 <h2 className="font-serif italic text-3xl">Training log updated.</h2>
                 <p className="opacity-60">Repetition builds separation.</p>
               </div>
-              <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
                 <button
                   onClick={onComplete}
-                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
+                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
                 >
                   Return Home
                 </button>

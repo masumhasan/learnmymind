@@ -33,14 +33,12 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               <p className="text-sm opacity-60">This does not change how you feel.</p>
               <p className="text-sm opacity-60">It changes where attention is placed.</p>
             </div>
-            <div className="absolute bottom-12 left-6 right-6 flex justify-center">
-              <button
-                onClick={() => setScreen('visual')}
-                className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Begin
-              </button>
-            </div>
+            <button
+              onClick={() => setScreen('visual')}
+              className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
+            >
+              ▶ Begin
+            </button>
           </div>
         );
       case 'visual':
@@ -57,14 +55,12 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               <p>“Wall.”</p>
             </div>
             {showContinue && (
-              <div className="absolute bottom-12 left-6 right-6 flex justify-center">
-                <button
-                  onClick={() => setScreen('audio')}
-                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
-                >
-                  ▶ Continue
-                </button>
-              </div>
+              <button
+                onClick={() => setScreen('audio')}
+                className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
+              >
+                ▶ Continue
+              </button>
             )}
           </div>
         );
@@ -78,14 +74,12 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               <p className="text-lg opacity-60">No interpretation.</p>
             </div>
             {showContinue && (
-              <div className="absolute bottom-12 left-6 right-6 flex justify-center">
-                <button
-                  onClick={() => setScreen('physical')}
-                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
-                >
-                  ▶ Continue
-                </button>
-              </div>
+              <button
+                onClick={() => setScreen('physical')}
+                className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
+              >
+                ▶ Continue
+              </button>
             )}
           </div>
         );
@@ -103,14 +97,12 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               <p className="text-sm opacity-40 pt-4">No adjustment. Just observe.</p>
             </div>
             {showContinue && (
-              <div className="absolute bottom-12 left-6 right-6 flex justify-center">
-                <button
-                  onClick={() => setScreen('exit')}
-                  className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
-                >
-                  ▶ Continue
-                </button>
-              </div>
+              <button
+                onClick={() => setScreen('exit')}
+                className="bg-accent text-bg px-12 py-4 rounded-full font-medium"
+              >
+                ▶ Continue
+              </button>
             )}
           </div>
         );
@@ -123,10 +115,10 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               <p>Sensations may still be present.</p>
               <p className="text-ink opacity-100 font-medium pt-2">Attention is now here.</p>
             </div>
-            <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
+            <div className="flex flex-col gap-4 w-full pt-8">
               <button
                 onClick={onComplete}
-                className="bg-accent text-bg py-4 rounded-full font-medium flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all"
+                className="bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-3"
               >
                 Return to Home
                 <Home size={18} />
@@ -134,7 +126,7 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
               {isFromWorkout && onBackToWorkout && (
                 <button
                   onClick={onBackToWorkout}
-                  className="border border-line py-4 rounded-full font-medium flex items-center justify-center gap-3 hover:bg-accent/5 transition-all text-accent"
+                  className="border border-line py-4 rounded-2xl font-medium flex items-center justify-center gap-3 hover:bg-accent/5 transition-colors text-accent"
                 >
                   Back to Workout
                   <ArrowLeft size={18} />
@@ -149,7 +141,7 @@ export default function ReturnToNow({ onComplete, onBackToWorkout, isFromWorkout
   };
 
   return (
-    <div className="fixed inset-0 bg-bg z-50 flex items-center justify-center p-8">
+    <div className="min-h-[60vh] flex items-center justify-center p-8">
       {renderScreen()}
     </div>
   );
