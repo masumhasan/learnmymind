@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Brain, ArrowLeft, Home, LayoutGrid, CheckCircle2, AlertCircle, Bell, Calendar, Phone, Users, Info, MessageSquare, Lock, Menu, X } from 'lucide-react';
+import { Brain, ArrowLeft, ArrowRight, Home, LayoutGrid, CheckCircle2, AlertCircle, Bell, Calendar, Phone, Users, Info, MessageSquare, Lock, Menu, X } from 'lucide-react';
 import { User, UserState, Workout } from '../types';
 
 interface WorkoutZeroProps {
@@ -152,7 +152,7 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
     <motion.div 
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
-      className="absolute bottom-12 left-8 right-8 flex justify-center"
+      className="absolute bottom-32 left-8 right-8 flex justify-center"
     >
       <button
         disabled={disabled}
@@ -228,21 +228,23 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex-1 flex flex-col items-center justify-center p-8 relative"
+            className="flex-1 relative flex flex-col items-center overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-orange-100/20 to-transparent pointer-events-none" />
             {renderNav()}
             
-            <div className="space-y-12 text-center max-w-xs">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="space-y-2"
-              >
-                <p className="text-xs uppercase tracking-[0.2em] opacity-40">Take one slow breath.</p>
-              </motion.div>
+            {/* Top Instruction */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="absolute top-[22%] text-center"
+            >
+              <p className="text-xs uppercase tracking-[0.2em] opacity-40">Take one slow breath.</p>
+            </motion.div>
 
+            {/* Centered Animation - Anchor Point */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="relative w-64 h-64 flex items-center justify-center">
                 <motion.div
                   animate={breathCycle === 1 ? {
@@ -263,8 +265,11 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
                   <Brain size={32} className="opacity-20 text-accent" />
                 </motion.div>
               </div>
+            </div>
 
-              <div className="h-24 flex flex-col justify-center gap-4">
+            {/* Bottom Text - Positioned relative to center */}
+            <div className="absolute top-[62%] w-full px-8 text-center">
+              <div className="h-32 flex flex-col justify-center gap-4">
                 <AnimatePresence>
                   {breathCycle === 1 && (
                     <motion.p
@@ -283,7 +288,7 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
                       className="space-y-4"
                     >
                       <p className="font-serif italic text-2xl">Exhale: Back to now.</p>
-                      <p className="text-xs opacity-50 leading-relaxed">This is not about fixing your mind. This is the first repetition in training it.</p>
+                      <p className="text-xs opacity-50 leading-relaxed max-w-[280px] mx-auto">This is not about fixing your mind. This is the first repetition in training it.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -294,7 +299,7 @@ export default function WorkoutZero({ user, userState, onComplete, onBack, onNow
               <motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
-                className="absolute bottom-12 left-6 right-6 flex flex-col items-center gap-6"
+                className="absolute bottom-24 left-6 right-6 flex flex-col items-center gap-6"
               >
                 <p className="col-header">You are training attention.</p>
                 <button

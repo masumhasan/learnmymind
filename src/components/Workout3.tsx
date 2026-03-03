@@ -180,7 +180,7 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
   );
 
   const renderCTA = (text: string, next: Screen, delay = 0) => (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay }} className="absolute bottom-12 left-6 right-6 flex justify-center">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay }} className="absolute bottom-32 left-6 right-6 flex justify-center">
       <button onClick={() => setCurrentScreen(next)} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">
         ▶ {text}
       </button>
@@ -217,11 +217,25 @@ export default function Workout3({ user, userState, onComplete, onBack, onNowCli
 
       <AnimatePresence mode="wait">
         {currentScreen === 'entry' && (
-          <motion.div key="entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center justify-center p-8 relative bg-gradient-to-b from-orange-50/20 to-bg">
+          <motion.div
+            key="entry"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex-1 relative flex flex-col items-center overflow-hidden bg-gradient-to-b from-orange-50/20 to-bg"
+          >
             {renderNav()}
-            <div className="space-y-12 text-center max-w-xs">
-              <motion.div animate={{ opacity: [0.7, 1, 0.7], y: [0, -5, 0] }} transition={{ duration: 20, repeat: Infinity }} className="text-accent/20"><Brain size={64} className="mx-auto" /></motion.div>
-              <div className="space-y-4">
+            
+            {/* Centered Animation */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <motion.div animate={{ opacity: [0.7, 1, 0.7], y: [0, -5, 0] }} transition={{ duration: 20, repeat: Infinity }} className="text-accent/20">
+                <Brain size={64} className="mx-auto" />
+              </motion.div>
+            </div>
+
+            {/* Bottom Text */}
+            <div className="absolute top-[62%] w-full px-8 text-center">
+              <div className="h-32 flex flex-col justify-center space-y-4">
                 <p className="font-serif italic text-2xl">“When the body feels unsafe,”</p>
                 <p className="font-serif italic text-2xl">“the mind tries to protect you.”</p>
                 <p className="text-sm opacity-50">Today you train the body’s response pattern.</p>

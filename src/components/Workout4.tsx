@@ -206,7 +206,7 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
   );
 
   const renderCTA = (text: string, next: Screen, delay = 0) => (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay }} className="absolute bottom-12 left-6 right-6 flex justify-center">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay }} className="absolute bottom-32 left-6 right-6 flex justify-center">
       <button onClick={() => setCurrentScreen(next)} className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all">
         ▶ {text}
       </button>
@@ -243,19 +243,31 @@ export default function Workout4({ user, userState, onComplete, onBack, onNowCli
 
       <AnimatePresence mode="wait">
         {currentScreen === 'entry' && (
-          <motion.div key="entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center justify-center p-8 relative bg-gradient-to-b from-blue-50/20 to-bg">
+          <motion.div
+            key="entry"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex-1 relative flex flex-col items-center overflow-hidden bg-gradient-to-b from-blue-50/20 to-bg"
+          >
             {renderNav()}
-            <div className="relative w-full max-w-xs text-center space-y-12">
+            
+            {/* Centered Animation */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="relative h-32 flex items-center justify-center">
                 <motion.div animate={{ rotate: 360 }} transition={{ duration: 24, repeat: Infinity, ease: "linear" }} className="absolute text-accent/10"><Cloud size={120} /></motion.div>
                 <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 4, repeat: Infinity }} className="w-16 h-16 bg-accent/5 rounded-full blur-xl" />
               </div>
-              <div className="space-y-4">
+            </div>
+
+            {/* Bottom Text */}
+            <div className="absolute top-[62%] w-full px-8 text-center">
+              <div className="h-32 flex flex-col justify-center space-y-4">
                 <p className="font-serif italic text-2xl">“The mind doesn’t get loud by accident.”</p>
                 <p className="font-serif italic text-2xl">“Noise is a signal.”</p>
                 <p className="text-sm opacity-50">Today, you learn why it happens.</p>
               </div>
-              <p className="text-[10px] uppercase tracking-widest opacity-30">Workout start — muscles load in 2 seconds.</p>
+              <p className="text-[10px] uppercase tracking-widest opacity-30 mt-4">Workout start — muscles load in 2 seconds.</p>
             </div>
             {renderCTA('Begin Workout', 'main_narration', 2.2)}
           </motion.div>

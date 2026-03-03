@@ -49,7 +49,8 @@ export default function App() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const username = (e.target as any).username.value;
+    const email = (e.target as any).email.value;
+    const username = email.split('@')[0];
     login(username);
   };
 
@@ -137,25 +138,38 @@ export default function App() {
                 <Brain size={32} />
               </div>
               <h1 className="font-serif italic text-4xl tracking-tight text-ink">LearnMyMind</h1>
-              <p className="text-sm opacity-50 uppercase tracking-widest text-ink">Cognitive Training MVP</p>
+              <p className="text-sm opacity-50 uppercase tracking-widest text-ink">Welcome Back</p>
             </div>
 
             <form id="login-form" onSubmit={handleLogin} className="space-y-6">
-              <div className="space-y-1">
-                <label className="col-header">Username</label>
-                <input
-                  name="username"
-                  required
-                  className="w-full bg-transparent border-b border-line py-2 focus:border-accent outline-none transition-colors text-ink"
-                  placeholder="Enter your name"
-                />
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <label className="col-header">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full bg-transparent border-b border-line py-2 focus:border-accent outline-none transition-colors text-ink"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="col-header">Password</label>
+                  <input
+                    name="password"
+                    type="password"
+                    required
+                    className="w-full bg-transparent border-b border-line py-2 focus:border-accent outline-none transition-colors text-ink"
+                    placeholder="••••••••"
+                  />
+                </div>
               </div>
             </form>
 
-            <div className="text-center">
+            <div className="text-center space-y-4">
               <button 
                 onClick={() => setShowOnboarding(true)}
-                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100"
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 block mx-auto"
               >
                 New here? Start Onboarding
               </button>
@@ -279,7 +293,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="absolute bottom-12 left-6 right-6 flex justify-center">
+                <div className="absolute bottom-32 left-6 right-6 flex justify-center">
                   <button
                     onClick={() => {
                       if (repsDone < selectedWorkout.reps) {

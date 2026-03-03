@@ -26,8 +26,8 @@ export default function Layout({ children, activeTab, setActiveTab }: LayoutProp
           <h1 className="font-serif italic text-3xl tracking-tight text-ink">LearnMyMind</h1>
           <div className="text-[9px] font-mono uppercase tracking-[0.3em] opacity-30 text-ink">Cognitive Laboratory</div>
         </div>
-        <div className="w-8 h-8 rounded-full border border-line flex items-center justify-center text-[10px] font-mono opacity-40">
-          01
+        <div className="px-3 py-1 rounded-full border border-line flex items-center justify-center text-[9px] font-mono opacity-40 whitespace-nowrap">
+          BETA v1.2
         </div>
       </header>
 

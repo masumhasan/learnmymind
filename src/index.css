@@ -43,7 +43,7 @@
 }
 
 .premium-card {
-  @apply bg-surface border border-line rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all duration-500;
+  @apply border border-line rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all duration-500;
 }
 
 .btn-primary {

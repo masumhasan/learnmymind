@@ -74,16 +74,15 @@ export default function WorkoutList({ onSelect, completedWorkouts }: WorkoutList
         <div className="relative z-10">
           <div className="flex justify-between items-start mb-6">
             <div className="space-y-2">
-              <div className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-60">Emergency Protocol</div>
-              <h3 className="font-serif italic text-2xl">Cognitive Reset</h3>
-              <p className="text-xs opacity-70 max-w-[200px]">3-minute recalibration for high-intensity states.</p>
+              <h3 className="font-serif italic text-2xl">Quick Reset</h3>
+              <p className="text-xs opacity-70">3-minute cognitive recalibration</p>
             </div>
             <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-accent transition-all duration-500">
               <Play size={18} fill="currentColor" />
             </button>
           </div>
           <div className="flex gap-3">
-            {['Focus', 'Clarity', 'Stability'].map((tag) => (
+            {['FOCUS', 'CLARITY', 'PEACE'].map((tag) => (
               <span key={tag} className="text-[9px] font-mono uppercase tracking-widest border border-white/20 px-3 py-1 rounded-full bg-white/5">
                 {tag}
               </span>

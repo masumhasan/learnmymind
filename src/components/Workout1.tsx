@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Brain, ArrowLeft, Home, CheckCircle2, AlertCircle, Bell, Lock, Menu, X, Eye, MessageSquare, Zap, Mic, Play } from 'lucide-react';
+import { Brain, ArrowLeft, ArrowRight, Home, CheckCircle2, AlertCircle, Bell, Lock, Menu, X, Eye, MessageSquare, Zap, Mic, Play } from 'lucide-react';
 import { User, UserState } from '../types';
 
 interface Workout1Props {
@@ -221,7 +221,7 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       transition={{ delay }}
-      className="absolute bottom-12 left-8 right-8 flex justify-center"
+      className="absolute bottom-32 left-8 right-8 flex justify-center"
     >
       <button
         onClick={() => setCurrentScreen(next)}
@@ -296,10 +296,12 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex-1 flex flex-col items-center justify-center p-8 relative"
+            className="flex-1 relative flex flex-col items-center overflow-hidden"
           >
             {renderNav()}
-            <div className="space-y-12 text-center max-w-xs">
+            
+            {/* Centered Animation */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="relative w-64 h-64 flex items-center justify-center">
                 <AnimatePresence>
                   {pulseCount > 0 && (
@@ -316,8 +318,11 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                   <Brain size={32} className="opacity-20 text-accent" />
                 </div>
               </div>
+            </div>
 
-              <div className="h-24 flex flex-col justify-center gap-2">
+            {/* Bottom Text */}
+            <div className="absolute top-[62%] w-full px-8 text-center">
+              <div className="h-32 flex flex-col justify-center gap-2">
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

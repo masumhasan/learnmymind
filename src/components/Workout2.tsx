@@ -182,7 +182,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       transition={{ delay }}
-      className="absolute bottom-12 left-6 right-6 flex justify-center"
+      className="absolute bottom-32 left-6 right-6 flex justify-center"
     >
       <button
         onClick={() => setCurrentScreen(next)}
@@ -245,9 +245,17 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
 
       <AnimatePresence mode="wait">
         {currentScreen === 'entry' && (
-          <motion.div key="entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center justify-center p-8 relative">
+          <motion.div
+            key="entry"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex-1 relative flex flex-col items-center overflow-hidden"
+          >
             {renderNav()}
-            <div className="space-y-12 text-center max-w-xs">
+            
+            {/* Centered Animation */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="relative w-64 h-64 flex items-center justify-center">
                 <motion.div
                   animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -259,7 +267,11 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
                   <Brain size={32} className="opacity-20 text-accent" />
                 </div>
               </div>
-              <div className="space-y-4">
+            </div>
+
+            {/* Bottom Text */}
+            <div className="absolute top-[62%] w-full px-8 text-center">
+              <div className="h-32 flex flex-col justify-center space-y-4">
                 <p className="font-serif italic text-2xl">Today you’ll see the loop.</p>
                 <p className="text-sm opacity-50">Not as an idea — as a pattern.</p>
                 <p className="text-xs opacity-30 italic">“Once you see it, you can spot where fuel gets added.”</p>
@@ -628,7 +640,7 @@ export default function Workout2({ user, userState, onComplete, onBack, onNowCli
               </div>
             </div>
 
-            <div className="absolute bottom-12 left-6 right-6 grid grid-cols-2 gap-4">
+            <div className="absolute bottom-32 left-6 right-6 grid grid-cols-2 gap-4">
               <button 
                 onClick={() => {
                   setD2Answered(true);

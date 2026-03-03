@@ -25,7 +25,7 @@ export default function MuscleSummary({ state }: { state: UserState }) {
             </div>
           </div>
         </div>
-        <div className="premium-card p-6 flex flex-col justify-between aspect-square">
+        <div className="premium-card p-6 flex flex-col justify-between aspect-square bg-surface">
           <TrendingUp size={20} strokeWidth={1.5} className="text-accent opacity-60" />
           <div className="space-y-1">
             <div className="text-[9px] font-mono uppercase opacity-40 tracking-widest">Modules Completed</div>

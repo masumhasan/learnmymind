@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Brain, ArrowRight, CheckCircle2, Mail, Chrome, Apple } from 'lucide-react';
+import { Brain, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 interface OnboardingProps {
   onComplete: (username: string) => void;
@@ -14,11 +14,17 @@ type OnboardingStep =
   | 'how_it_works' 
   | 'layers' 
   | 'expectation' 
+  | 'signup'
+  | 'login'
+  | 'forgot_password'
   | 'account';
 
 export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps) {
   const [step, setStep] = useState<OnboardingStep>('welcome');
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [agreed, setAgreed] = useState(false);
 
   const next = (nextStep: OnboardingStep) => setStep(nextStep);
@@ -170,6 +176,158 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
           </motion.div>
         );
 
+      case 'signup':
+        return (
+          <motion.div
+            key="signup"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8 w-full max-w-sm"
+          >
+            <div className="text-center space-y-2">
+              <h2 className="font-serif italic text-3xl">Create Account</h2>
+              <p className="text-sm opacity-50">Join the training floor.</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="col-header">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="name@example.com"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="col-header">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="••••••••"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="col-header">Confirm Password</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button 
+                onClick={() => setStep('login')}
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
+              >
+                Already have an account? Login
+              </button>
+            </div>
+          </motion.div>
+        );
+
+      case 'login':
+        return (
+          <motion.div
+            key="login"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8 w-full max-w-sm"
+          >
+            <div className="text-center space-y-2">
+              <h2 className="font-serif italic text-3xl">Welcome Back</h2>
+              <p className="text-sm opacity-50">Resume your training.</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="col-header">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="name@example.com"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="col-header">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="••••••••"
+                />
+              </div>
+              <div className="text-right">
+                <button 
+                  onClick={() => setStep('forgot_password')}
+                  className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button 
+                onClick={() => setStep('signup')}
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
+              >
+                Don't have an account? Signup
+              </button>
+            </div>
+          </motion.div>
+        );
+
+      case 'forgot_password':
+        return (
+          <motion.div
+            key="forgot_password"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8 w-full max-w-sm"
+          >
+            <div className="text-center space-y-2">
+              <h2 className="font-serif italic text-3xl">Reset Password</h2>
+              <p className="text-sm opacity-50">We'll send you a link.</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <label className="col-header">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b border-line/20 py-2 focus:border-ink outline-none transition-colors"
+                  placeholder="name@example.com"
+                />
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button 
+                onClick={() => setStep('login')}
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
+              >
+                Back to Login
+              </button>
+            </div>
+          </motion.div>
+        );
+
       case 'account':
         return (
           <motion.div
@@ -193,31 +351,19 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                   placeholder="Enter your name"
                 />
               </div>
-
-              <div className="grid grid-cols-3 gap-4 pt-4">
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
-                  <Mail size={20} className="opacity-40" />
-                </button>
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
-                  <Apple size={20} className="opacity-40" />
-                </button>
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
-                  <Chrome size={20} className="opacity-40" />
-                </button>
-              </div>
             </div>
 
             <div className="space-y-6">
-              <label className="flex items-start gap-3 cursor-pointer group">
-                <div className="pt-1">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className="flex-shrink-0">
                   <input
                     type="checkbox"
                     checked={agreed}
                     onChange={(e) => setAgreed(e.target.checked)}
                     className="sr-only"
                   />
-                  <div className={`w-5 h-5 rounded border transition-colors flex items-center justify-center ${agreed ? 'bg-accent border-accent' : 'border-line/20 group-hover:border-accent/40'}`}>
-                    {agreed && <CheckCircle2 size={14} className="text-bg" />}
+                  <div className={`w-8 h-8 rounded-xl border-2 transition-all flex items-center justify-center ${agreed ? 'bg-accent border-accent' : 'border-line/30 group-hover:border-accent/40'}`}>
+                    {agreed && <CheckCircle2 size={20} className="text-bg" />}
                   </div>
                 </div>
                 <span className="text-xs opacity-60 leading-relaxed">
@@ -239,26 +385,32 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
 
         <div className="absolute bottom-12 left-0 right-0 flex flex-col gap-4 items-center">
           <button
-            disabled={step === 'account' && (!username || !agreed)}
+            disabled={(step === 'account' && (!username || !agreed)) || (step === 'signup' && (!email || !password || !confirmPassword)) || (step === 'login' && (!email || !password)) || (step === 'forgot_password' && !email)}
             onClick={() => {
               if (step === 'welcome') next('what_is');
               else if (step === 'what_is') next('what_is_not');
               else if (step === 'what_is_not') next('how_it_works');
               else if (step === 'how_it_works') next('layers');
               else if (step === 'layers') next('expectation');
-              else if (step === 'expectation') next('account');
+              else if (step === 'expectation') next('signup');
+              else if (step === 'signup') next('account');
+              else if (step === 'login') onComplete(username || email.split('@')[0]);
+              else if (step === 'forgot_password') next('login');
               else if (step === 'account') onComplete(username);
             }}
             className="bg-accent text-bg py-2.5 px-8 rounded-xl font-medium flex items-center justify-center gap-2 text-sm disabled:opacity-20 min-w-[160px]"
           >
             {step === 'welcome' && '▶ Begin'}
             {(step === 'what_is' || step === 'what_is_not' || step === 'how_it_works' || step === 'layers' || step === 'expectation') && '▶ Continue'}
+            {step === 'signup' && '▶ Create Account'}
+            {step === 'login' && '▶ Login'}
+            {step === 'forgot_password' && '▶ Send Reset Link'}
             {step === 'account' && '▶ Enter Training Floor'}
           </button>
 
           {step === 'welcome' && (
             <button
-              onClick={onLoginClick}
+              onClick={() => setStep('login')}
               className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100"
             >
               Already have an account? Login
