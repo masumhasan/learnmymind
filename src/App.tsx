@@ -125,48 +125,54 @@ export default function App() {
     }
 
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center p-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-sm w-full space-y-12"
-        >
-          <div className="text-center space-y-4">
-            <div className="w-16 h-16 bg-accent rounded-3xl mx-auto flex items-center justify-center text-bg">
-              <Brain size={32} />
+      <div className="fixed inset-0 bg-bg flex items-center justify-center p-6 overflow-hidden">
+        <div className="relative w-full max-w-xs h-full flex flex-col items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full space-y-12"
+          >
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-accent rounded-3xl mx-auto flex items-center justify-center text-bg">
+                <Brain size={32} />
+              </div>
+              <h1 className="font-serif italic text-4xl tracking-tight text-ink">LearnMyMind</h1>
+              <p className="text-sm opacity-50 uppercase tracking-widest text-ink">Cognitive Training MVP</p>
             </div>
-            <h1 className="font-serif italic text-4xl tracking-tight text-ink">LearnMyMind</h1>
-            <p className="text-sm opacity-50 uppercase tracking-widest text-ink">Cognitive Training MVP</p>
-          </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-1">
-              <label className="col-header">Username</label>
-              <input
-                name="username"
-                required
-                className="w-full bg-transparent border-b border-line py-2 focus:border-accent outline-none transition-colors text-ink"
-                placeholder="Enter your name"
-              />
+            <form id="login-form" onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-1">
+                <label className="col-header">Username</label>
+                <input
+                  name="username"
+                  required
+                  className="w-full bg-transparent border-b border-line py-2 focus:border-accent outline-none transition-colors text-ink"
+                  placeholder="Enter your name"
+                />
+              </div>
+            </form>
+
+            <div className="text-center">
+              <button 
+                onClick={() => setShowOnboarding(true)}
+                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100"
+              >
+                New here? Start Onboarding
+              </button>
             </div>
+          </motion.div>
+
+          <div className="absolute bottom-12 left-0 right-0 flex justify-center">
             <button
+              form="login-form"
               type="submit"
-              className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 group"
+              className="bg-accent text-bg py-2.5 px-10 rounded-xl font-medium flex items-center justify-center gap-2 text-sm min-w-[160px]"
             >
               Start Training
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
-
-          <div className="text-center">
-            <button 
-              onClick={() => setShowOnboarding(true)}
-              className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
-            >
-              New here? Start Onboarding
+              <ArrowRight size={18} />
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     );
   }

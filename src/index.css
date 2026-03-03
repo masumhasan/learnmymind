@@ -6,33 +6,51 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --font-serif: "Cormorant Garamond", serif;
   
-  --color-bg: #F4F6FA;
-  --color-ink: #2E3A59;
-  --color-accent: #3F4A8A;
-  --color-neutral: #AAB2C8;
-  --color-line: #E2E6F0;
-  --color-error: #B94A48;
+  /* Neutral, structured palette */
+  --color-bg: #F8F9FA;
+  --color-ink: #121212;
+  --color-accent: #2D3250; /* Deep muted indigo */
+  --color-neutral: #64748B;
+  --color-line: #E2E8F0;
+  --color-error: #991B1B;
+  --color-surface: #FFFFFF;
 }
 
 @layer base {
   body {
-    @apply bg-bg text-ink font-sans antialiased;
+    @apply bg-bg text-ink font-sans antialiased selection:bg-accent/10 selection:text-accent;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply tracking-tight font-medium;
   }
 }
 
 .data-row {
-  @apply border-b border-line/20 transition-colors duration-200 cursor-pointer;
+  @apply border-b border-line transition-colors duration-300 cursor-pointer;
 }
 
 .data-row:hover {
-  @apply bg-ink text-bg;
+  @apply bg-accent text-white;
 }
 
 .col-header {
-  @apply font-serif italic text-[11px] opacity-50 uppercase tracking-wider;
+  @apply font-mono text-[10px] opacity-40 uppercase tracking-[0.2em];
 }
 
 .data-value {
   @apply font-mono tracking-tighter;
+}
+
+.premium-card {
+  @apply bg-surface border border-line rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all duration-500;
+}
+
+.btn-primary {
+  @apply bg-accent text-white px-8 py-3 rounded-lg font-medium tracking-tight hover:bg-accent/90 active:scale-[0.98] transition-all duration-200;
+}
+
+.btn-secondary {
+  @apply border border-line bg-surface text-ink px-8 py-3 rounded-lg font-medium tracking-tight hover:bg-bg active:scale-[0.98] transition-all duration-200;
 }
 

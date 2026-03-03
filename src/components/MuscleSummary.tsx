@@ -1,67 +1,70 @@
 import React from 'react';
 import { UserState } from '../types';
-import { TrendingUp, Award, Zap } from 'lucide-react';
+import { TrendingUp, Award, Zap, Activity } from 'lucide-react';
 
 export default function MuscleSummary({ state }: { state: UserState }) {
   const muscles = Object.entries(state.stats);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <header className="flex justify-between items-end">
-        <div>
-          <h2 className="font-serif italic text-3xl">Profile</h2>
-          <p className="text-xs opacity-50 uppercase tracking-widest">Cognitive Muscle Summary</p>
+        <div className="space-y-1">
+          <p className="text-[10px] font-mono opacity-30 uppercase tracking-[0.2em]">Subject Profile</p>
+          <h2 className="font-serif italic text-4xl">Performance Data</h2>
         </div>
-        <div className="data-value text-xl">LVL 04</div>
+        <div className="font-mono text-xl opacity-40">LVL 04</div>
       </header>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-accent text-bg p-4 rounded-2xl flex flex-col justify-between aspect-square">
-          <Award size={24} strokeWidth={1.5} />
-          <div>
-            <div className="text-[10px] uppercase opacity-50">Total Reps</div>
-            <div className="data-value text-3xl">
+      <div className="grid grid-cols-2 gap-6">
+        <div className="premium-card p-6 flex flex-col justify-between aspect-square bg-accent text-white border-none">
+          <Award size={20} strokeWidth={1.5} className="opacity-60" />
+          <div className="space-y-1">
+            <div className="text-[9px] font-mono uppercase opacity-50 tracking-widest">Aggregate Reps</div>
+            <div className="data-value text-4xl font-light">
               {state.progress.reduce((acc, p) => acc + p.reps, 0)}
             </div>
           </div>
         </div>
-        <div className="border border-line p-4 rounded-2xl flex flex-col justify-between aspect-square">
-          <TrendingUp size={24} strokeWidth={1.5} />
-          <div>
-            <div className="text-[10px] uppercase opacity-50">Workouts</div>
-            <div className="data-value text-3xl">{state.progress.length}</div>
+        <div className="premium-card p-6 flex flex-col justify-between aspect-square">
+          <TrendingUp size={20} strokeWidth={1.5} className="text-accent opacity-60" />
+          <div className="space-y-1">
+            <div className="text-[9px] font-mono uppercase opacity-40 tracking-widest">Modules Completed</div>
+            <div className="data-value text-4xl font-light">{state.progress.length}</div>
           </div>
         </div>
       </div>
 
       <section>
-        <h3 className="col-header mb-4">Muscle Development</h3>
-        <div className="space-y-1">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="col-header">Neural Development</h3>
+          <Activity size={12} className="opacity-20" />
+        </div>
+        <div className="divide-y divide-line border-t border-b border-line">
           {muscles.length > 0 ? (
             muscles.map(([name, value]) => (
-              <div key={name} className="data-row py-3 flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <Zap size={14} className="opacity-30" />
-                  <span className="font-medium tracking-tight">{name}</span>
+              <div key={name} className="py-4 flex justify-between items-center group hover:px-2 transition-all duration-300">
+                <div className="flex items-center gap-4">
+                  <Zap size={12} className="opacity-20 group-hover:text-accent group-hover:opacity-100 transition-all" />
+                  <span className="text-sm font-medium tracking-tight">{name}</span>
                 </div>
-                <span className="data-value text-sm">{value} pts</span>
+                <span className="font-mono text-xs opacity-60">{value} PTS</span>
               </div>
             ))
           ) : (
-            <div className="py-12 text-center border border-dashed border-line/20 rounded-2xl">
-              <p className="text-xs opacity-40 uppercase tracking-widest">No training data yet</p>
+            <div className="py-16 text-center border border-dashed border-line rounded-xl">
+              <p className="text-[10px] font-mono opacity-30 uppercase tracking-widest">No developmental data recorded</p>
             </div>
           )}
         </div>
       </section>
 
-      <section className="pt-4">
-        <h3 className="col-header mb-4">Recent Activity</h3>
-        <div className="space-y-2">
-          {state.progress.slice(-3).reverse().map((p, i) => (
-            <div key={i} className="text-[10px] font-mono flex justify-between opacity-50">
-              <span>WORKOUT_ID_{p.workout_id}</span>
-              <span>{p.reps} REPS // {new Date(p.completed_at).toLocaleDateString()}</span>
+      <section className="space-y-6">
+        <h3 className="col-header">Historical Log</h3>
+        <div className="space-y-3">
+          {state.progress.slice(-5).reverse().map((p, i) => (
+            <div key={i} className="font-mono text-[9px] flex justify-between items-center opacity-40 hover:opacity-100 transition-opacity duration-300 py-1 border-b border-line/50">
+              <span className="tracking-widest">MODULE_ID_{p.workout_id.toString().padStart(2, '0')}</span>
+              <span className="tracking-tighter">{p.reps} REPS // {new Date(p.completed_at).toLocaleDateString()}</span>
             </div>
           ))}
         </div>

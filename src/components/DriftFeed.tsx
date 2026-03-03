@@ -4,49 +4,51 @@ import { motion } from 'motion/react';
 
 export default function DriftFeed() {
   return (
-    <div className="space-y-12 pb-12">
-      <header className="text-center space-y-2">
-        <h2 className="font-serif italic text-3xl">Drift</h2>
-        <p className="text-xs opacity-50 uppercase tracking-widest">Psychological Mirroring Feed</p>
+    <div className="space-y-16 pb-24">
+      <header className="text-center space-y-3">
+        <p className="text-[10px] font-mono opacity-30 uppercase tracking-[0.3em]">Module: Drift</p>
+        <h2 className="font-serif italic text-4xl">Psychological Mirroring</h2>
+        <div className="w-12 h-px bg-line mx-auto mt-6" />
       </header>
 
-      <div className="space-y-24">
+      <div className="space-y-32">
         {DRIFT_TILES.map((tile, index) => (
           <motion.div
             key={tile.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col items-center text-center space-y-6"
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center text-center space-y-8"
           >
             {tile.type === 'image' ? (
-              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-[40px] shadow-xl">
+              <div className="relative w-full aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-bg group">
                 <img
                   src={tile.imageUrl}
                   alt={tile.content}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                  className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 ease-in-out"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-line" />
+                <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
               </div>
             ) : (
-              <div className="py-12 px-6 border-y border-line w-full">
-                <p className="font-serif text-2xl leading-relaxed italic opacity-80 text-ink">
+              <div className="py-20 px-8 border-t border-b border-line w-full relative overflow-hidden">
+                <p className="font-serif text-3xl leading-relaxed italic text-ink/90 relative z-10">
                   "{tile.content}"
                 </p>
+                <div className="absolute top-4 left-4 text-[8px] font-mono opacity-20 tracking-widest">TEXT_FRAGMENT_{tile.id}</div>
               </div>
             )}
-            <div className="data-value text-[10px] opacity-30 text-ink">
-              TILE_REF_00{tile.id} // MIRROR_MODE_ACTIVE
+            <div className="font-mono text-[9px] opacity-20 tracking-[0.4em] uppercase">
+              REF_ID_00{tile.id} // ANALYSIS_PENDING
             </div>
           </motion.div>
         ))}
       </div>
 
-      <div className="text-center pt-12">
-        <div className="inline-block w-1 h-12 bg-line rounded-full animate-bounce" />
-        <p className="text-[10px] uppercase tracking-widest opacity-30 mt-4 text-ink">End of Drift</p>
+      <div className="text-center pt-24 space-y-8">
+        <div className="w-px h-24 bg-gradient-to-b from-line to-transparent mx-auto" />
+        <p className="text-[9px] font-mono uppercase tracking-[0.5em] opacity-20">End of Analysis Stream</p>
       </div>
     </div>
   );

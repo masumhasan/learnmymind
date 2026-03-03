@@ -46,21 +46,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p>Not motivation.</p>
               <p>Training.</p>
             </div>
-            <div className="absolute bottom-12 left-6 right-6 flex flex-col gap-4">
-              <button
-                onClick={() => next('what_is')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 group hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Begin
-              </button>
-
-              <button
-                onClick={onLoginClick}
-                className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100 transition-opacity"
-              >
-                Already have an account? Login
-              </button>
-            </div>
           </motion.div>
         );
 
@@ -78,14 +63,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p>A structured mental training system.</p>
               <p>Built around cognitive workouts.</p>
               <p>Designed to strengthen attention and separation.</p>
-            </div>
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                onClick={() => next('what_is_not')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Continue
-              </button>
             </div>
           </motion.div>
         );
@@ -113,14 +90,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p className="text-xs opacity-40 uppercase tracking-widest leading-relaxed">
                 It trains where attention goes.
               </p>
-            </div>
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                onClick={() => next('how_it_works')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Continue
-              </button>
             </div>
           </motion.div>
         );
@@ -150,14 +119,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               </div>
             </div>
             <p className="text-xs opacity-40 uppercase tracking-widest">Repetition builds automatic strength.</p>
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                onClick={() => next('layers')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Continue
-              </button>
-            </div>
           </motion.div>
         );
 
@@ -185,14 +146,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                 <p className="text-sm opacity-60">Pattern exposure through media.</p>
               </div>
             </div>
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                onClick={() => next('expectation')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Continue
-              </button>
-            </div>
           </motion.div>
         );
 
@@ -213,14 +166,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               <p className="italic pt-4">Pause.</p>
               <p>You will notice them sooner.</p>
               <p>And respond differently.</p>
-            </div>
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                onClick={() => next('account')}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all"
-              >
-                ▶ Create Account
-              </button>
             </div>
           </motion.div>
         );
@@ -250,13 +195,13 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
               </div>
 
               <div className="grid grid-cols-3 gap-4 pt-4">
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line transition-colors">
+                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
                   <Mail size={20} className="opacity-40" />
                 </button>
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line transition-colors">
+                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
                   <Apple size={20} className="opacity-40" />
                 </button>
-                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line transition-colors">
+                <button className="p-4 border border-line rounded-2xl flex items-center justify-center hover:bg-line">
                   <Chrome size={20} className="opacity-40" />
                 </button>
               </div>
@@ -279,16 +224,6 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
                   I understand this is an educational training system.
                 </span>
               </label>
-
-            <div className="absolute bottom-12 left-6 right-6">
-              <button
-                disabled={!username || !agreed}
-                onClick={() => onComplete(username)}
-                className="w-full bg-accent text-bg py-4 rounded-2xl font-medium flex items-center justify-center gap-2 disabled:opacity-20 transition-all hover:scale-105 active:scale-95"
-              >
-                ▶ Enter Training Floor
-              </button>
-            </div>
             </div>
           </motion.div>
         );
@@ -297,9 +232,40 @@ export default function Onboarding({ onComplete, onLoginClick }: OnboardingProps
 
   return (
     <div className="fixed inset-0 bg-bg z-50 flex items-center justify-center p-6 overflow-hidden">
-      <AnimatePresence mode="wait">
-        {renderScreen()}
-      </AnimatePresence>
+      <div className="relative w-full max-w-xs h-full flex flex-col items-center justify-center">
+        <AnimatePresence mode="wait">
+          {renderScreen()}
+        </AnimatePresence>
+
+        <div className="absolute bottom-12 left-0 right-0 flex flex-col gap-4 items-center">
+          <button
+            disabled={step === 'account' && (!username || !agreed)}
+            onClick={() => {
+              if (step === 'welcome') next('what_is');
+              else if (step === 'what_is') next('what_is_not');
+              else if (step === 'what_is_not') next('how_it_works');
+              else if (step === 'how_it_works') next('layers');
+              else if (step === 'layers') next('expectation');
+              else if (step === 'expectation') next('account');
+              else if (step === 'account') onComplete(username);
+            }}
+            className="bg-accent text-bg py-2.5 px-8 rounded-xl font-medium flex items-center justify-center gap-2 text-sm disabled:opacity-20 min-w-[160px]"
+          >
+            {step === 'welcome' && '▶ Begin'}
+            {(step === 'what_is' || step === 'what_is_not' || step === 'how_it_works' || step === 'layers' || step === 'expectation') && '▶ Continue'}
+            {step === 'account' && '▶ Enter Training Floor'}
+          </button>
+
+          {step === 'welcome' && (
+            <button
+              onClick={onLoginClick}
+              className="text-[10px] opacity-30 uppercase tracking-widest hover:opacity-100"
+            >
+              Already have an account? Login
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

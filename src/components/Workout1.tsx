@@ -186,29 +186,29 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
   }, [currentScreen]);
 
   const renderNav = (showHome = false) => (
-    <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50">
-      <div className="flex items-center gap-4">
-        <button onClick={onBack} className="flex items-center gap-2 text-xs uppercase tracking-widest opacity-50 hover:opacity-100 transition-opacity">
+    <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-50">
+      <div className="flex items-center gap-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] opacity-30 hover:opacity-100 transition-all duration-500">
           <ArrowLeft size={14} /> Back
         </button>
         <button 
           onClick={() => setShowSections(true)}
-          className="flex items-center gap-2 text-xs uppercase tracking-widest opacity-50 hover:opacity-100 transition-opacity"
+          className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] opacity-30 hover:opacity-100 transition-all duration-500"
         >
           <Menu size={14} /> Sections
         </button>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         {!isDrill && (
           <button 
             onClick={onNowClick}
-            className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity bg-accent/5 px-3 py-1.5 rounded-full text-accent"
+            className="flex items-center gap-2 text-[9px] font-mono uppercase tracking-[0.2em] opacity-40 hover:opacity-100 transition-all duration-500 bg-accent/5 px-4 py-2 rounded-full text-accent border border-accent/10"
           >
-            <Brain size={12} /> Now
+            <Brain size={12} /> Recalibrate
           </button>
         )}
         {showHome && !isDrill && (
-          <button onClick={onBack} className="opacity-50 hover:opacity-100 transition-opacity">
+          <button onClick={onBack} className="opacity-30 hover:opacity-100 transition-all duration-500">
             <Home size={18} />
           </button>
         )}
@@ -221,13 +221,13 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       transition={{ delay }}
-      className="absolute bottom-12 left-6 right-6 flex justify-center"
+      className="absolute bottom-12 left-8 right-8 flex justify-center"
     >
       <button
         onClick={() => setCurrentScreen(next)}
-        className="bg-accent text-bg px-12 py-4 rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
+        className="bg-accent text-white px-16 py-5 rounded-xl font-medium transition-all duration-500 shadow-xl shadow-accent/10 hover:scale-105 active:scale-95 hover:shadow-accent/20"
       >
-        ▶ {text}
+        {text}
       </button>
     </motion.div>
   );
@@ -243,20 +243,23 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
             className="fixed inset-0 z-[100] bg-bg/95 backdrop-blur-md p-8 flex flex-col"
           >
             <div className="flex justify-between items-center mb-12">
-              <h2 className="font-serif italic text-2xl">Workout Sections</h2>
+              <div className="space-y-1">
+                <p className="text-[10px] font-mono opacity-30 uppercase tracking-[0.3em]">Navigation</p>
+                <h2 className="font-serif italic text-3xl">Workout Sections</h2>
+              </div>
               <button 
                 onClick={() => setShowSections(false)}
-                className="p-2 hover:bg-accent/5 rounded-full transition-colors"
+                className="p-3 hover:bg-accent/5 rounded-xl transition-all duration-500"
               >
-                <X size={24} />
+                <X size={24} className="opacity-40" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-8 pb-12">
+            <div className="flex-1 overflow-y-auto space-y-12 pb-12">
               {['Intro', 'Theory', 'Drills', 'Practice', 'Review'].map(group => (
-                <div key={group} className="space-y-4">
-                  <h3 className="text-[10px] uppercase tracking-[0.2em] opacity-30 font-bold">{group}</h3>
-                  <div className="grid gap-2">
+                <div key={group} className="space-y-6">
+                  <h3 className="text-[9px] font-mono uppercase tracking-[0.3em] opacity-20 font-bold">{group}</h3>
+                  <div className="grid gap-3">
                     {SECTIONS.filter(s => s.group === group).map(section => (
                       <button
                         key={section.id}
@@ -264,14 +267,18 @@ export default function Workout1({ user, userState, onComplete, onBack, onNowCli
                           setCurrentScreen(section.id);
                           setShowSections(false);
                         }}
-                        className={`text-left p-4 rounded-2xl transition-all flex justify-between items-center ${
+                        className={`text-left p-5 rounded-xl transition-all duration-500 flex justify-between items-center group ${
                           currentScreen === section.id 
-                            ? 'bg-accent text-bg' 
+                            ? 'bg-accent text-white shadow-lg shadow-accent/20' 
                             : 'bg-accent/5 hover:bg-accent/10'
                         }`}
                       >
-                        <span className="font-medium">{section.label}</span>
-                        {currentScreen === section.id && <div className="w-1.5 h-1.5 bg-bg rounded-full" />}
+                        <span className="font-medium tracking-tight">{section.label}</span>
+                        {currentScreen === section.id ? (
+                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        ) : (
+                          <ArrowRight size={14} className="opacity-0 group-hover:opacity-20 transition-all duration-500 -translate-x-2 group-hover:translate-x-0" />
+                        )}
                       </button>
                     ))}
                   </div>

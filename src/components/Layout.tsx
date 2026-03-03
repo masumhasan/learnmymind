@@ -19,43 +19,48 @@ export default function Layout({ children, activeTab, setActiveTab }: LayoutProp
   ];
 
   return (
-    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-bg shadow-2xl relative overflow-hidden">
-      {/* Header */}
-      <header className="p-6 border-b border-line flex justify-between items-center">
-        <h1 className="font-serif italic text-2xl tracking-tight text-ink">LearnMyMind</h1>
-        <div className="text-[10px] font-mono uppercase tracking-widest opacity-50 text-ink">BETA v1.3</div>
+    <div className="min-h-screen flex flex-col max-w-md mx-auto bg-bg relative overflow-hidden selection:bg-accent/10 selection:text-accent">
+      {/* Subtle Header */}
+      <header className="px-8 py-10 flex justify-between items-end">
+        <div className="space-y-1">
+          <h1 className="font-serif italic text-3xl tracking-tight text-ink">LearnMyMind</h1>
+          <div className="text-[9px] font-mono uppercase tracking-[0.3em] opacity-30 text-ink">Cognitive Laboratory</div>
+        </div>
+        <div className="w-8 h-8 rounded-full border border-line flex items-center justify-center text-[10px] font-mono opacity-40">
+          01
+        </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-24">
+      <main className="flex-1 overflow-y-auto pb-32">
         <motion.div
           key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="px-8"
         >
           {children}
         </motion.div>
       </main>
 
-      {/* Navigation */}
-      <nav className="absolute bottom-0 left-0 right-0 bg-bg/80 backdrop-blur-md border-t border-line px-4 py-3">
+      {/* Minimal Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface/80 backdrop-blur-xl border-t border-line px-8 py-6 z-50">
         <div className="flex justify-between items-center">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-center gap-1 transition-colors ${
-                activeTab === tab.id ? 'text-accent' : 'text-neutral'
+              className={`relative flex flex-col items-center gap-1 transition-all duration-300 ${
+                activeTab === tab.id ? 'text-accent scale-110' : 'text-neutral hover:text-ink'
               }`}
             >
-              <tab.icon size={20} />
-              <span className="text-[10px] uppercase tracking-tighter font-medium">{tab.label}</span>
+              <tab.icon size={18} strokeWidth={activeTab === tab.id ? 2.5 : 1.5} />
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="activeTab"
-                  className="w-1 h-1 rounded-full bg-accent mt-0.5"
+                  className="absolute -bottom-2 w-1 h-1 rounded-full bg-accent"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
             </button>
